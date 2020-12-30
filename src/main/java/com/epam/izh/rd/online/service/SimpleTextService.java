@@ -1,5 +1,7 @@
 package com.epam.izh.rd.online.service;
 
+import java.util.Locale;
+
 public class SimpleTextService implements TextService {
 
     /**
@@ -13,7 +15,7 @@ public class SimpleTextService implements TextService {
      */
     @Override
     public String removeString(String base, String remove) {
-        return null; //TODO
+        return base.replace(remove, "");
     }
 
     /**
@@ -24,6 +26,12 @@ public class SimpleTextService implements TextService {
      */
     @Override
     public boolean isQuestionString(String text) {
+        int size = text.length();
+        if (size > 0) {
+            if (text.charAt(size - 1) == '?')
+                return true;
+        }
+
         return false; //TODO
     }
 
@@ -35,7 +43,11 @@ public class SimpleTextService implements TextService {
      */
     @Override
     public String concatenate(String... elements) {
-        return null; //TODO
+        StringBuilder string = new StringBuilder();
+        for (String str : elements)
+            string.append(str);
+
+        return string.toString();
     }
 
     /**
@@ -47,7 +59,17 @@ public class SimpleTextService implements TextService {
      */
     @Override
     public String toJumpCase(String text) {
-        return null; //TODO
+        char[] charArrow = text.toCharArray();
+        text = "";
+        if (charArrow.length > 0) {
+            for (int i = 0; i < charArrow.length; i++) {
+                if (i%2 == 0)
+                   text += Character.toLowerCase(charArrow[i]);
+                else
+                    text += Character.toUpperCase(charArrow[i]);
+            }
+        }
+        return text;
     }
 
     /**
@@ -59,6 +81,15 @@ public class SimpleTextService implements TextService {
      */
     @Override
     public boolean isPalindrome(String string) {
+        if (string.length() > 1) {
+            string = string.replace(" ", "").toLowerCase();
+            for (int i = 0; i < string.length()/2;i++) {
+                if (string.charAt(i) != string.charAt(string.length()-i-1)) {
+                    return false;
+                }
+            }
+            return true;
+        }
        return false; //TODO
     }
 }
